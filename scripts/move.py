@@ -19,19 +19,18 @@ def move():
     vel_msg.angular.y = 0
     vel_msg.angular.z = angularSpeed
 
-    while not rospy.is_shutdown():
+    t = rospy.Time.now().to_sec()
+    tlimit = t + seconds
 
-        t = rospy.Time.now().to_sec()
-        tlimit = t + seconds
+    while not rospy.is_shutdown() and (t < tlimit):
 
-        while(t < tlimit):
-            velocity_publisher.publish(vel_msg)
-            rate.sleep()
-            t = rospy.Time.now().to_sec()
-
-        vel_msg.linear.x = 0
-        vel_msg.angular.z = 0
         velocity_publisher.publish(vel_msg)
+        rate.sleep()
+        t = rospy.Time.now().to_sec()
+
+    vel_msg.linear.x = 0
+    vel_msg.angular.z = 0
+    velocity_publisher.publish(vel_msg)
 
 if __name__ == '__main__':
     try:
