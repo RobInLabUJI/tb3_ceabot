@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 from geometry_msgs.msg import Twist
 
@@ -9,7 +9,7 @@ def move():
     rate = rospy.Rate(10) # 10hz
 
     linearSpeed = 0.0 	# m/s
-    angularSpeed = 0.0	# rad/s
+    angularSpeed = 1.0	# rad/s
     seconds = 1.0
 
     vel_msg.linear.x = linearSpeed
