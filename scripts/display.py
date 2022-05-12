@@ -20,8 +20,7 @@ class image_display:
     def callback(self, msg):
 
         np_arr = np.frombuffer(msg.data, np.uint8)
-        #image_np = cv.imdecode(np_arr, cv.CV_LOAD_IMAGE_COLOR)
-        image_np = cv.imdecode(np_arr, cv.IMREAD_COLOR) # OpenCV >= 3.0:
+        image_np = cv.imdecode(np_arr, cv.IMREAD_COLOR)
         image_edges = cv.Canny(image_np, 100, 200)
         cv.imshow('cv_img', image_np)
         cv.imshow('edges', image_edges)
