@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import sys
+
 import numpy as np
 
 import cv2 as cv
@@ -12,12 +14,12 @@ from sensor_msgs.msg import CompressedImage
 class image_display:
 
     def __init__(self):
-        self.subscriber = rospy.Subscriber("/camera/image/compressed",
+        self.subscriber = rospy.Subscriber("/raspicam_node/image/compressed",
             CompressedImage, self.callback,  queue_size = 1)
 
     def callback(self, msg):
 
-        np_arr = np.fromstring(msg.data, np.uint8)
+        np_arr = np.frombuffer(msg.data, np.uint8)
         #image_np = cv.imdecode(np_arr, cv.CV_LOAD_IMAGE_COLOR)
         image_np = cv.imdecode(np_arr, cv.IMREAD_COLOR) # OpenCV >= 3.0:
         image_edges = cv.Canny(image_np, 100, 200)
@@ -31,7 +33,7 @@ def main(args):
     try:
         rospy.spin()
     except KeyboardInterrupt:
-        print "Shutting down ROS Image display module"
+        print("Shutting down ROS Image display module")
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
