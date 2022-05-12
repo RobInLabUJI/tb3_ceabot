@@ -34,7 +34,7 @@ def main(args):
         rospy.spin()
     except KeyboardInterrupt:
         print("Shutting down ROS Image display module")
-    cv2.destroyAllWindows()
+    cv.destroyAllWindows()
 
 if __name__ == '__main__':
     main(sys.argv)
