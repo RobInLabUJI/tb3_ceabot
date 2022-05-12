@@ -2,7 +2,7 @@
 
 import numpy as np
 
-import cv2
+import cv2 as cv
 
 import roslib
 import rospy
@@ -18,11 +18,12 @@ class image_display:
     def callback(self, msg):
 
         np_arr = np.fromstring(msg.data, np.uint8)
-        #image_np = cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
-        image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR) # OpenCV >= 3.0:
-        
-        cv2.imshow('cv_img', image_np)
-        cv2.waitKey(1)
+        #image_np = cv.imdecode(np_arr, cv.CV_LOAD_IMAGE_COLOR)
+        image_np = cv.imdecode(np_arr, cv.IMREAD_COLOR) # OpenCV >= 3.0:
+        image_edges = cv.Canny(image_np, 100, 200)
+        cv.imshow('cv_img', image_np)
+        cv.imshow('edges', image_edges)
+        cv.waitKey(1)
 
 def main(args):
     ic = image_display()
